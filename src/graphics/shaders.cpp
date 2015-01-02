@@ -956,6 +956,16 @@ namespace MeshShader
         AssignSamplerNames(Program, 0, "tex", 1, "glosstex");
     }
 
+    SkinnedObjectShader::SkinnedObjectShader()
+    {
+        Program = LoadProgram(OBJECT,
+            GL_VERTEX_SHADER, file_manager->getAsset("shaders/skinning.vert").c_str(),
+            GL_FRAGMENT_SHADER, file_manager->getAsset("shaders/utils/encode_normal.frag").c_str(),
+            GL_FRAGMENT_SHADER, file_manager->getAsset("shaders/object.frag").c_str());
+        AssignUniforms("ModelMatrix", "InverseModelMatrix", "JointTransform[0]");
+        AssignSamplerNames(Program, 0, "tex");
+    }
+
     InstancedObjectShader::InstancedObjectShader()
     {
         Program = LoadProgram(OBJECT,
