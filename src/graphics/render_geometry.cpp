@@ -460,7 +460,7 @@ void IrrDriver::renderGBuffer()
                 {
                     if (!CVS->isARBBaseInstanceUsable())
                         glBindVertexArray(mesh->vao);
-                    if (CVS->isAZDOEnabled())
+                    if (!CVS->isAZDOEnabled())
                         MeshShader::SkinnedObjectShader::getInstance()->SetTextureUnits(getTextureGLuint(mesh->textures[0]), getTextureGLuint(mesh->textures[1]));
                     else
                         MeshShader::SkinnedObjectShader::getInstance()->SetTextureHandles(mesh->TextureHandles[0], mesh->TextureHandles[1]);
