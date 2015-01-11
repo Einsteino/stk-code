@@ -174,7 +174,8 @@ void STKAnimatedMesh::updateGL()
                 {
                     for (unsigned idx = 0; idx < SkinnedMesh->WeightInfluence[i].size(); idx++)
                     {
-                        const std::vector<scene::JointInfluence> &ReportedWeight = SkinnedMesh->WeightInfluence[i][idx];
+                        std::vector<scene::JointInfluence> ReportedWeight = SkinnedMesh->WeightInfluence[i][idx];
+                        std::sort(ReportedWeight.begin(), ReportedWeight.end(), [](const scene::JointInfluence &a, const scene::JointInfluence &b) {return a.weight > b .weight; });
                         float remaining_weight = 1.;
                         for (unsigned k = 0; k < 4; k++)
                         {
