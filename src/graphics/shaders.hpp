@@ -81,6 +81,12 @@ public:
     ObjectRefShader();
 };
 
+class SkinnedRefObjectShader : public ShaderHelperSingleton<SkinnedRefObjectShader, core::matrix4, core::matrix4, std::vector<core::matrix4> >, public TextureRead < Trilinear_Anisotropic_Filtered, Trilinear_Anisotropic_Filtered >
+{
+public:
+    SkinnedRefObjectShader();
+};
+
 class InstancedObjectRefShader : public ShaderHelperSingleton<InstancedObjectRefShader>, public TextureRead<Trilinear_Anisotropic_Filtered, Trilinear_Anisotropic_Filtered>
 {
 public:

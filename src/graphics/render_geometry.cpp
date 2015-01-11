@@ -448,7 +448,6 @@ void IrrDriver::renderGBuffer()
 
         // Skinned meshes
         {
-            glUseProgram(MeshShader::SkinnedObjectShader::getInstance()->Program);
             if (CVS->isARBBaseInstanceUsable())
                 glBindVertexArray(VAOManager::getInstance()->getVAO(video::EVT_STANDARD, true));
             for (STKAnimatedMesh *animatedmesh : *(ListSkinned::getInstance()))
@@ -456,6 +455,7 @@ void IrrDriver::renderGBuffer()
                 core::matrix4 ModelMatrix = animatedmesh->getAbsoluteTransformation(), InvModelMatrix;
                 ModelMatrix.getInverse(InvModelMatrix);
 
+                glUseProgram(MeshShader::SkinnedObjectShader::getInstance()->Program);
                 for (GLMesh *mesh : animatedmesh->MeshSolidMaterial[Material::SHADERTYPE_SOLID])
                 {
                     if (!CVS->isARBBaseInstanceUsable())
@@ -465,6 +465,19 @@ void IrrDriver::renderGBuffer()
                     else
                         MeshShader::SkinnedObjectShader::getInstance()->SetTextureHandles(mesh->TextureHandles[0], mesh->TextureHandles[1]);
                     MeshShader::SkinnedObjectShader::getInstance()->setUniforms(ModelMatrix, InvModelMatrix, *(animatedmesh->JointMatrixes));
+                    glDrawElementsBaseVertex(mesh->PrimitiveType, (int)mesh->IndexCount, mesh->IndexType, (GLvoid *)mesh->vaoOffset, (int)mesh->vaoBaseVertex);
+                }
+
+                glUseProgram(MeshShader::SkinnedRefObjectShader::getInstance()->Program);
+                for (GLMesh *mesh : animatedmesh->MeshSolidMaterial[Material::SHADERTYPE_ALPHA_TEST])
+                {
+                    if (!CVS->isARBBaseInstanceUsable())
+                        glBindVertexArray(mesh->vao);
+                    if (!CVS->isAZDOEnabled())
+                        MeshShader::SkinnedRefObjectShader::getInstance()->SetTextureUnits(getTextureGLuint(mesh->textures[0]), getTextureGLuint(mesh->textures[1]));
+                    else
+                        MeshShader::SkinnedRefObjectShader::getInstance()->SetTextureHandles(mesh->TextureHandles[0], mesh->TextureHandles[1]);
+                    MeshShader::SkinnedRefObjectShader::getInstance()->setUniforms(ModelMatrix, InvModelMatrix, *(animatedmesh->JointMatrixes));
                     glDrawElementsBaseVertex(mesh->PrimitiveType, (int)mesh->IndexCount, mesh->IndexType, (GLvoid *)mesh->vaoOffset, (int)mesh->vaoBaseVertex);
                 }
             }
