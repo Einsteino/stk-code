@@ -963,7 +963,7 @@ namespace MeshShader
             GL_FRAGMENT_SHADER, file_manager->getAsset("shaders/utils/encode_normal.frag").c_str(),
             GL_FRAGMENT_SHADER, file_manager->getAsset("shaders/object.frag").c_str());
         AssignUniforms("ModelMatrix", "InverseModelMatrix", "JointTransform[0]");
-        AssignSamplerNames(Program, 0, "tex");
+        AssignSamplerNames(Program, 0, "tex", 1, "glosstex");
     }
 
     InstancedObjectShader::InstancedObjectShader()

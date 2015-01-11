@@ -461,9 +461,9 @@ void IrrDriver::renderGBuffer()
                     if (!CVS->isARBBaseInstanceUsable())
                         glBindVertexArray(mesh->vao);
                     if (CVS->isAZDOEnabled())
-                        MeshShader::SkinnedObjectShader::getInstance()->SetTextureUnits(getTextureGLuint(mesh->textures[1]));
+                        MeshShader::SkinnedObjectShader::getInstance()->SetTextureUnits(getTextureGLuint(mesh->textures[0]), getTextureGLuint(mesh->textures[1]));
                     else
-                        MeshShader::SkinnedObjectShader::getInstance()->SetTextureHandles(mesh->TextureHandles[1]);
+                        MeshShader::SkinnedObjectShader::getInstance()->SetTextureHandles(mesh->TextureHandles[0], mesh->TextureHandles[1]);
                     MeshShader::SkinnedObjectShader::getInstance()->setUniforms(ModelMatrix, InvModelMatrix, *(animatedmesh->JointMatrixes));
                     glDrawElementsBaseVertex(mesh->PrimitiveType, (int)mesh->IndexCount, mesh->IndexType, (GLvoid *)mesh->vaoOffset, (int)mesh->vaoBaseVertex);
                 }

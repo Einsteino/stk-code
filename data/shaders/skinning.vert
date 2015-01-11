@@ -87,8 +87,8 @@ void main()
     mat4 TransposeInverseModelView = transpose(InverseModelMatrix * InverseViewMatrix);
     gl_Position = ModelViewProjectionMatrix * vec4(SkinnedPosition.xyz, 1.);
     nor = (TransposeInverseModelView * vec4(Normal, 0.)).xyz;
-    tangent = (TransposeInverseModelView * vec4(Tangent, 1.)).xyz;
-    bitangent = (TransposeInverseModelView * vec4(Bitangent, 1.)).xyz;
+    tangent = (TransposeInverseModelView * vec4(Tangent, 0.)).xyz;
+    bitangent = (TransposeInverseModelView * vec4(Bitangent, 0.)).xyz;
     uv = (TextureMatrix * vec4(Texcoord, 1., 1.)).xy;
     uv_bis = SecondTexcoord;
 }
