@@ -58,29 +58,50 @@ void main()
     vec4 IdlePosition = vec4(Position, 1.);
     vec4 SkinnedPosition = vec4(0.);
 
+    vec4 SingleBoneInfluencedPosition;
     if (index0 >= 0)
     {
-        vec4 tmp = JointTransform[index0] * IdlePosition;
-        SkinnedPosition += weight0 * tmp / tmp.w;
+        SingleBoneInfluencedPosition = JointTransform[index0] * IdlePosition;
+        SingleBoneInfluencedPosition /= SingleBoneInfluencedPosition.w;
     }
+    else
+    {
+        SingleBoneInfluencedPosition = IdlePosition;
+    }
+    SkinnedPosition += weight0 * SingleBoneInfluencedPosition;
 
     if (index1 >= 0)
     {
-        vec4 tmp = JointTransform[index1] * IdlePosition;
-        SkinnedPosition += weight1 * tmp / tmp.w;
+        SingleBoneInfluencedPosition= JointTransform[index1] * IdlePosition;
+        SingleBoneInfluencedPosition /= SingleBoneInfluencedPosition.w;
     }
+    else
+    {
+        SingleBoneInfluencedPosition = IdlePosition;
+    }
+    SkinnedPosition += weight1 * SingleBoneInfluencedPosition;
 
     if (index2 >= 0)
     {
-        vec4 tmp = JointTransform[index2] * IdlePosition;
-        SkinnedPosition += weight2 * tmp / tmp.w;
+        SingleBoneInfluencedPosition = JointTransform[index2] * IdlePosition;
+        SingleBoneInfluencedPosition /= SingleBoneInfluencedPosition.w;
     }
+    else
+    {
+        SingleBoneInfluencedPosition = IdlePosition;
+    }
+    SkinnedPosition += weight2 * SingleBoneInfluencedPosition;
 
     if (index3 >= 0)
     {
-        vec4 tmp = JointTransform[index3] * IdlePosition;
-        SkinnedPosition += weight3 * tmp / tmp.w;
+        SingleBoneInfluencedPosition = JointTransform[index3] * IdlePosition;
+        SingleBoneInfluencedPosition /= SingleBoneInfluencedPosition.w;
     }
+    else
+    {
+        SingleBoneInfluencedPosition = IdlePosition;
+    }
+    SkinnedPosition += weight3 * SingleBoneInfluencedPosition;
 
     color = Color.zyxw;
     mat4 ModelViewProjectionMatrix = ProjectionMatrix * ViewMatrix * ModelMatrix;

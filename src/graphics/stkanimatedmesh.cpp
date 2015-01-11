@@ -175,13 +175,18 @@ void STKAnimatedMesh::updateGL()
                     for (unsigned idx = 0; idx < SkinnedMesh->WeightInfluence[i].size(); idx++)
                     {
                         const std::vector<scene::JointInfluence> &ReportedWeight = SkinnedMesh->WeightInfluence[i][idx];
+                        float remaining_weight = 1.;
                         for (unsigned k = 0; k < 4; k++)
                         {
                             scene::JointInfluence influence;
                             if (ReportedWeight.size() > k)
-                                influence = ReportedWeight[k];
+                               influence = ReportedWeight[k];
                             else
+                            {
                                 influence.JointIdx = -1;
+                                influence.weight = remaining_weight;
+                            }
+                            remaining_weight -= influence.weight;
                             reworkedWeightInfluence.push_back(influence);
                         }
                     }
